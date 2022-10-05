@@ -1,4 +1,5 @@
 use nannou::prelude::*;
+mod model;
 
 fn main() {
     nannou::app(model)
@@ -22,21 +23,17 @@ fn view(app: &App, _model: &Model, frame: Frame){
 
     draw.background().color(PLUM);
 
-    let sine = app.time.sin();
-    let slowersine = (app.time / 2.0).sin();
-
-    let boundary = app.window_rect();
-
-    let x = map_range(sine, -1.0, 1.0, boundary.left(), boundary.right());
-    let y = map_range(slowersine, -1.0, 1.0, boundary.bottom(), boundary.top());
-
-    let x = 300.0 * app.time.cos() + 0.0;
-    let y = 200.0 * app.time.sin() + 0.0;
-
     draw.ellipse().color(YELLOW).x_y(0.0, 0.0);
-    draw.ellipse().color(STEELBLUE).x_y(x, y);
 
-    // draw.ellipse().color(STEELBLUE).x_y(0.0, 0.0);
+    let planets = &model::PLANETS;
+    for planet in planets {
+        let time = (app.time / planet.year_in_days) * 100.0;
+
+        let x = planet.orbit_radius * time.cos() + 0.0;
+        let y = planet.orbit_radius * time.sin() + 0.0;
+
+        draw.ellipse().color(planet.color).radius(planet.planet_radius).x_y(x, y);
+    }
 
     draw.to_frame(app, &frame).unwrap();
 }
