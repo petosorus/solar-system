@@ -69,4 +69,5 @@ static NEPTUNE: Planet = Planet {
 
 pub static PLANETS: [Planet; 8] = [NEPTUNE, URANUS, SATURN, JUPITER, MARS, EARTH, VENUS, MERCURY];
 pub static MAX_ORBIT: f32 = PLANETS[0].orbit_radius;
+pub static MIN_ORBIT: f32 = PLANETS[PLANETS.len() - 1].orbit_radius;
 pub static SMALLEST_PLANET: f32 = MERCURY.planet_radius;
